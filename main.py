@@ -1,4 +1,4 @@
-import zlib, json, time
+import zlib, json, time, os
 import zmq
 
 # EDDN relay to connect to
@@ -8,8 +8,13 @@ timeoutEDDN = 60*10**3 # 60 seconds
 # Only allow commodity messages
 allowedSchemas = ["https://eddn.edcd.io/schemas/commodity/3"]
 
+# Save messages to a folder
+dataFolderPath = "data"
+if not os.path.exists(dataFolderPath):
+    os.makedirs(dataFolderPath)
+
 def saveMessage(message, filename):
-    with open(f"{filename}.json", "w") as f:
+    with open(rf"{dataFolderPath}\{filename}.json", "w") as f:
         json.dump(message, f, indent=4)
 
 def main():

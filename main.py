@@ -1,7 +1,9 @@
 import zlib, json, time, os, sys
 import zmq, zmq.asyncio
 import asyncio
+
 from database import Database
+import logFunctions as log
 
 import tracemalloc
 tracemalloc.start()
@@ -35,7 +37,7 @@ async def saveMessage2db(message, database: Database):
 
     # Get system id
     database.execute(f"INSERT INTO starsystem (name) VALUES ('{systemName}');")
-    systemId = database.execute(f"SELECT id FROM starsystem WHERE name = '{systemName}';")
+    systemId = database.fetch(f"SELECT id FROM starsystem WHERE name = '{systemName}';")
     systemId = systemId[0][0]
 
     # Add station to database
@@ -71,10 +73,10 @@ def main():
         subscriber.setsockopt(zmq.SUBSCRIBE, b"")
 
         while True:
-            print("Connecting to EDDN relay...", flush=True)
+            log.logInfo("Connecting to EDDN relay...", "ZMQ")
             try:
                 subscriber.connect(relayEDDN)
-                print("Connected to EDDN relay", flush=True)
+                log.logInfo("Connected to EDDN relay", "ZMQ")
                 while True:
                     message = await subscriber.recv()
                     if message == False:
@@ -85,15 +87,15 @@ def main():
                     
                     # Detect only commodity messages
                     if jsonMessage["$schemaRef"] in allowedSchemas:
-                        print("Commodity message detected", flush=True, end=" | ")
+                        log.logInfo(f"Received message from schema 'commodityV3'", "EDDN")
                         await saveMessage2db(jsonMessage, database)
-                        print("Message saved to database", flush=True)
+                        log.logInfo(f"Saved message to database", "EDDN")
                     else: pass
             except zmq.ZMQError as e:
-                print ("ZMQSocketException: " + str(e), flush=True)
+                log.logError("ZMQSocketException: " + str(e), "ZMQ")
                 subscriber.disconnect(relayEDDN)
                 time.sleep(5)
-                print("Retrying...", flush=True)
+                log.logInfo("Retrying...", "ZMQ")
     asyncio.run(subs())
             
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import zlib, json, time, os, sys
 import zmq, zmq.asyncio
 import asyncio
+from database import Database
 
 import tracemalloc
 tracemalloc.start()
@@ -15,15 +16,49 @@ allowedSchemas = ["https://eddn.edcd.io/schemas/commodity/3"]
 # zqm.asyncio requires WindowsSelectorEventLoopPolicy on Windows
 if sys.platform: asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-# Save messages to a folder
-dataFolderPath = "data"
-if not os.path.exists(dataFolderPath):
-    os.makedirs(dataFolderPath)
+# Connection details
+hostname, port = "localhost", "5432"
+username, password = "postgres", "root"
+databaseName = "eddb2.0"
+
+# Create database object
+database = Database()
+assert database.connect(hostname, port, username, password, databaseName), "Database connection failed"
 
 # Save message to a file
-async def saveMessage(message, filename):
-    with open(rf"{dataFolderPath}\{filename}.json", "w") as f:
-        json.dump(message, f, indent=4)
+async def saveMessage2db(message, database: Database):
+    marketId = message["message"]["marketId"]
+    stationId = marketId
+    systemName = message["message"]["systemName"].replace("'", "''")
+    stationName = message["message"]["stationName"].replace("'", "''")
+    commodities = message["message"]["commodities"]
+
+    # Get system id
+    database.execute(f"INSERT INTO starsystem (name) VALUES ('{systemName}');")
+    systemId = database.execute(f"SELECT id FROM starsystem WHERE name = '{systemName}';")
+    systemId = systemId[0][0]
+
+    # Add station to database
+    database.execute(f"INSERT INTO station (marketId, starsystemid, name) VALUES ({stationId}, {systemId}, '{stationName}') ON CONFLICT DO NOTHING;")
+    
+    # Add commodities to database
+    for commodity in commodities:
+        id = commodity["name"]
+        buyPrice = commodity["buyPrice"]
+        sellPrice = commodity["sellPrice"]
+        demand = commodity["demand"]
+        stock = commodity["stock"]
+
+        # Add commodity to database
+        command = [
+            "INSERT INTO market (commodityid, marketid, buyPrice, stock, sellprice, demand) ",
+            f"VALUES ('{id}', {marketId}, {buyPrice}, {stock}, {sellPrice}, {demand}) ",
+            f"ON CONFLICT (commodityid, marketid) DO UPDATE SET ",
+            f"buyPrice = {buyPrice}, stock = {stock}, sellprice = {sellPrice}, demand = {demand};"
+        ]
+        database.execute("".join(command))
+
+
 
 # Subscribe to EDDN
 def main():
@@ -50,9 +85,9 @@ def main():
                     
                     # Detect only commodity messages
                     if jsonMessage["$schemaRef"] in allowedSchemas:
-                        saveTime = time.strftime("%Y%m%d%H%M%S")
-                        await saveMessage(jsonMessage, saveTime)
-                        print(f"Saved message at {saveTime}.json", flush=True)
+                        print("Commodity message detected", flush=True, end=" | ")
+                        await saveMessage2db(jsonMessage, database)
+                        print("Message saved to database", flush=True)
                     else: pass
             except zmq.ZMQError as e:
                 print ("ZMQSocketException: " + str(e), flush=True)
@@ -62,4 +97,9 @@ def main():
     asyncio.run(subs())
             
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Keyboard interrupt detected, closing...")
+        database.close()
+        sys.exit(0)

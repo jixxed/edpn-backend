@@ -5,7 +5,7 @@ class Database(object):
         self.connection = None
         self.cursor = None
         
-    def connect(self, hostname = "localhost", port = 5432, username = "postgres", password = "postgres", databaseName = "") -> bool:
+    def connect(self, hostname = "localhost", port = 5432, username = "postgres", password = "postgres", databaseName = "", application_name="") -> bool:
         """Connect to database
 
         If connection fails, return False"""
@@ -14,6 +14,7 @@ class Database(object):
         self.username = username
         self.password = password
         self.databaseName = databaseName
+        self.applicationName = application_name
         
         try:
             self.connection = psycopg2.connect(
@@ -21,7 +22,8 @@ class Database(object):
                 port=self.port,
                 user=self.username,
                 password=self.password,
-                database=self.databaseName
+                database=self.databaseName,
+                application_name=self.applicationName
                 )
             self.cursor = self.connection.cursor()
             return True

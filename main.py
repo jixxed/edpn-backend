@@ -1,6 +1,7 @@
-import zlib, json, time, os, sys
+import zlib, json, time, sys
 import zmq, zmq.asyncio
 import asyncio
+import msvcrt
 
 from database import Database
 import logFunctions as log
@@ -22,12 +23,13 @@ if sys.platform: asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopP
 hostname, port = "localhost", "5432"
 username, password = "postgres", "root"
 databaseName = "eddb2.0"
+applicationName = "EDDB2.0"
 
 # Create database object
 database = Database()
-assert database.connect(hostname, port, username, password, databaseName), "Database connection failed"
+assert database.connect(hostname, port, username, password, databaseName, applicationName), "Database connection failed"
 
-# Save message to a file
+# Save message to a database
 async def saveMessage2db(message, database: Database):
     marketId = message["message"]["marketId"]
     stationId = marketId
@@ -37,12 +39,14 @@ async def saveMessage2db(message, database: Database):
 
     # Get system id
     database.execute(f"INSERT INTO starsystem (name) VALUES ('{systemName}');")
+    database.commit()
     systemId = database.fetch(f"SELECT id FROM starsystem WHERE name = '{systemName}';")
     systemId = systemId[0][0]
 
     # Add station to database
     database.execute(f"INSERT INTO station (marketId, starsystemid, name) VALUES ({stationId}, {systemId}, '{stationName}') ON CONFLICT DO NOTHING;")
-    
+    database.commit()
+
     # Add commodities to database
     for commodity in commodities:
         id = commodity["name"]
@@ -59,6 +63,7 @@ async def saveMessage2db(message, database: Database):
             f"buyPrice = {buyPrice}, stock = {stock}, sellprice = {sellPrice}, demand = {demand};"
         ]
         database.execute("".join(command))
+        database.commit()
 
 
 

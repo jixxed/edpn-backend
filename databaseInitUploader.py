@@ -1,11 +1,7 @@
-from database import Database
 import json
 
-# Connection details
-hostname, port = "localhost", "5432"
-username, password = "eddb2.0app", r"w8f7bSM6w8W*"
-databaseName = "eddb2.0"
-applicationName = "EDDB2.0"
+from database import Database
+from secret import hostname, port, username, password, databaseName, applicationName
 
 database = Database() # Create database object
 assert database.connect(hostname, port, username, password, databaseName, applicationName), "Database connection failed"

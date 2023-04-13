@@ -4,6 +4,7 @@ import asyncio
 
 from database import Database
 import logFunctions as log
+from secret import hostname, port, username, password, databaseName, applicationName
 
 import tracemalloc
 tracemalloc.start()
@@ -17,12 +18,6 @@ allowedSchemas = ["https://eddn.edcd.io/schemas/commodity/3"]
 
 # zqm.asyncio requires WindowsSelectorEventLoopPolicy on Windows
 if sys.platform: asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
-# Connection details
-hostname, port = "localhost", "5432"
-username, password = "eddb2.0app", r"w8f7bSM6w8W*"
-databaseName = "eddb2.0"
-applicationName = "EDDB2.0"
 
 # Create database object
 database = Database()
@@ -99,10 +94,14 @@ def main():
                         print(f"Success | Transaction ID: {messageCount}")
                     else: pass
             except zmq.ZMQError as e:
-                log.logError("ZMQSocketException: " + str(e), "ZMQ")
+                log.logWarning("ZMQSocketException: " + str(e), "ZMQ")
                 subscriber.disconnect(relayEDDN)
+                log.logInfo("Retrying in 5 seconds...", "ZMQ")
                 time.sleep(5)
-                log.logInfo("Retrying...", "ZMQ")
+            except Exception as e:
+                log.logError(str(e), "EDDN")
+                log.logInfo("Reloading ZMQ socket...", "ZMQ")
+                subscriber.disconnect(relayEDDN)
     asyncio.run(subs())
             
 if __name__ == "__main__":

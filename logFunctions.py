@@ -1,7 +1,6 @@
-from colorama import Fore, Back, Style
+from colorama import __Fore, __Style
 import colorama
 import datetime
-import os
 
 colorama.init(convert=True)
 
@@ -20,34 +19,28 @@ def Logger(logRecord):
 
 def logDatetime():
     logTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    logTimeString = f"{Fore.LIGHTBLACK_EX}{__bold}{logTime}{__normal}"
-    print(f"{logTimeString}", end=f"{Style.RESET_ALL} ")
+    logTimeString = f"{__Fore.LIGHTBLACK_EX}{__bold}{logTime}{__normal}"
+    print(f"{logTimeString}", end=f"{__Style.RESET_ALL} ")
 
 def logInfo(message, group, end="\n"):
     logDatetime()
-    groupString = f"{__normal}{Fore.MAGENTA}{group}{Style.RESET_ALL}"
-    print(f"{Fore.BLUE}{Style.BRIGHT}INFO{Style.RESET_ALL}     {groupString} {Style.RESET_ALL}{message}", end=end)
+    groupString = f"{__normal}{__Fore.MAGENTA}{group}{__Style.RESET_ALL}"
+    print(f"{__Fore.BLUE}{__Style.BRIGHT}INFO{__Style.RESET_ALL}     {groupString} {__Style.RESET_ALL}{message}", end=end)
 
 def logWarning(message, group, end="\n"):
     logDatetime()
-    groupString = f"{__normal}{Fore.MAGENTA}{group}{Style.RESET_ALL}"
-    print(f"{Fore.YELLOW}{Style.BRIGHT}WARNING{Style.RESET_ALL}  {groupString} {Style.RESET_ALL}{message}", end=end)
+    groupString = f"{__normal}{__Fore.MAGENTA}{group}{__Style.RESET_ALL}"
+    print(f"{__Fore.YELLOW}{__Style.BRIGHT}WARNING{__Style.RESET_ALL}  {groupString} {__Style.RESET_ALL}{message}", end=end)
 
 def logError(message, group, end="\n"):
     logDatetime()
-    groupString = f"{__normal}{Fore.MAGENTA}{group}{Style.RESET_ALL}"
-    print(f"{Fore.RED}{Style.BRIGHT}ERROR{Style.RESET_ALL}    {groupString} {Style.RESET_ALL}{message}", end=end)
+    groupString = f"{__normal}{__Fore.MAGENTA}{group}{__Style.RESET_ALL}"
+    print(f"{__Fore.RED}{__Style.BRIGHT}ERROR{__Style.RESET_ALL}    {groupString} {__Style.RESET_ALL}{message}", end=end)
 
 def logCritical(message, group, end="\n"):
     logDatetime()
-    groupString = f"{__normal}{Fore.MAGENTA}{group}{Style.RESET_ALL}"
-    print(f"{Fore.RED}{Style.BRIGHT}CRITICAL{Style.RESET_ALL}  {groupString} {Style.RESET_ALL}{message}", end=end)
-
-class logHandler():
-    def __init__(self, bot): self.bot = bot
-    def setFormatter(self): pass
-    level = 10
-    handle = Logger
+    groupString = f"{__normal}{__Fore.MAGENTA}{group}{__Style.RESET_ALL}"
+    print(f"{__Fore.RED}{__Style.BRIGHT}CRITICAL{__Style.RESET_ALL}  {groupString} {__Style.RESET_ALL}{message}", end=end)
 
 if __name__ == "__main__":
     logInfo("This is a test", "testGroup")

@@ -9,8 +9,9 @@ __pycache__/
 # .vscode
 .vscode
 
-#data
+#user defined
 data/
+secret.py
 
 # Distribution / packaging
 .Python

@@ -1,6 +1,8 @@
 create table starSystem (
 	id serial primary key,
-	name text
+	edsmId int,
+	name text,
+	population bigint
 );
 create table coordinates (
 	id int,

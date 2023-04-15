@@ -15,7 +15,8 @@ create table commodity (
 	name text
 );
 create table station (
-	marketId bigint primary key,
+	id serial primary key,
+	marketId bigint unique,
 	starSystemId int,
 	name text,
 	constraint fkSystemId foreign key(starSystemId) references starSystem(id)

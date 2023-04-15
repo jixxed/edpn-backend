@@ -1,4 +1,4 @@
-from colorama import __Fore, __Style
+from colorama import Fore as __Fore, Style as __Style
 import colorama
 import datetime
 

@@ -22,7 +22,6 @@ power_state = id_name_column('power_state')()
 economy = id_name_column('economy')()
 reserve_type = id_name_column('reserve_type')()
 faction = id_name_column('faction')()
-security = id_name_column('security')()
 power = id_name_column('power')()
 module = id_name_column('module')()
 ship = id_name_column('ship')()
@@ -36,9 +35,9 @@ system = Table(
     Column('power_state_id', Integer, ForeignKey('power_state.id')),
     Column('primary_economy_id', Integer, ForeignKey('economy.id')),
     Column('reserve_type_id', Integer, ForeignKey('reserve_type.id')),
-    Column('security_id', Integer, ForeignKey('security.id')),
     Column('allegiance', String),
     Column('government', String),
+    Column('security', String),
     Column('x', Double),
     Column('y', Double),
     Column('z', Double),
@@ -118,10 +117,11 @@ reserve_type_system_map = Table(
     Column('system_id', Integer, ForeignKey('system.id'))
 )
 
+# TODO I have a strong feeling this table isn't needed
 security_system_map = Table(
     'security_system_map', metadata,
     pkey_column(),
-    Column('security_id', Integer, ForeignKey('security.id')),
+    Column('security', String),
     Column('system_id', Integer, ForeignKey('system.id'))
 )
 

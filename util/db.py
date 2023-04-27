@@ -49,7 +49,7 @@ class DBBase:
         self.engine = engine
 
     def execute(self, *args, **kwargs):
-        with self.engine.connect() as conn:
+        with self.engine.begin() as conn:
             return conn.execute(*args, **kwargs)
 
     def get(self, table, *fields, **kwargs):

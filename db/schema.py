@@ -1,7 +1,7 @@
 from functools import partial
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, MetaData, String, \
-    SmallInteger, Text, PickleType, Double, BigInteger, DateTime, Boolean
+    SmallInteger, Double, BigInteger, DateTime, Boolean
 from sqlalchemy.dialects.postgresql import HSTORE
 
 metadata = MetaData()
@@ -40,7 +40,7 @@ system = Table(
     Column('controlling_minor_faction_id', Integer, ForeignKey('faction.id')),
     Column('government_id', Integer, ForeignKey('government.id')),
     Column('power_id', Integer, ForeignKey('power.id')),
-    Column('power_state_id', Integer, ForeignKey('power_state.id')),  # FIXME!!!!!
+    Column('power_state_id', Integer, ForeignKey('power_state.id')),
     Column('primary_economy_id', Integer, ForeignKey('economy.id')),
     Column('reserve_type_id', Integer, ForeignKey('reserve_type.id')),
     Column('security_id', Integer, ForeignKey('security.id')),
@@ -144,14 +144,18 @@ station_export_commodities = Table(
     'station_export_commodities', metadata,
     pkey_column(),
     Column('commodity_id', Integer, ForeignKey('commodity.id')),
-    Column('station_id', Integer, ForeignKey('station.id'))
+    Column('station_id', Integer, ForeignKey('station.id')),
+    Column('price', Integer),
+    Column('stock', Integer)
 )
 
 station_import_commodities = Table(
     'station_import_commodities', metadata,
     pkey_column(),
     Column('commodity_id', Integer, ForeignKey('commodity.id')),
-    Column('station_id', Integer, ForeignKey('station.id'))
+    Column('station_id', Integer, ForeignKey('station.id')),
+    Column('price', Integer),
+    Column('demand', Integer)
 )
 
 station_prohibited_commodities = Table(

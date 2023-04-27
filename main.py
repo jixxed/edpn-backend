@@ -10,6 +10,7 @@ from config import config
 from common.shared import edpn_db
 from db.schema import metadata
 from util.log import init_logging
+from eddn.listener import process_eddn
 
 log = logging.getLogger(__name__)
 
@@ -20,6 +21,8 @@ if __name__ == '__main__':
     log.info('Starting')
     log.info('Config:\n%s', pformat(asdict(config)))
     loop = asyncio.get_event_loop()
+
+    loop.create_task(process_eddn())
 
     try:
         loop.run_forever()

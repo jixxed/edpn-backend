@@ -16,6 +16,11 @@ class General:
 
 
 @dataclass(frozen=True)
+class EDDN:
+    json_file: Optional[str] = None
+
+
+@dataclass(frozen=True)
 class DB:
     password: Optional[str] = None
     socket: Optional[str] = None
@@ -28,11 +33,15 @@ class DB:
 class Config:
     db: DB = field(default_factory=DB)
     general: General = field(default_factory=General)
+    eddn: EDDN = field(default_factory=EDDN)
 
 
 def parse_config(path_to_config: str) -> Dict:
     with open(path_to_config) as cfg_file:
-        return yaml.load(cfg_file, Loader=yaml.FullLoader)
+        cfg = yaml.load(cfg_file, Loader=yaml.FullLoader)
+    if cfg is None:  # Empty file
+        cfg = {}
+    return cfg
 
 
 def generate_config():

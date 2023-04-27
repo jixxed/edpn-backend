@@ -1,8 +1,12 @@
 from functools import partial
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, MetaData, String, \
-    SmallInteger, Double, BigInteger, DateTime, Boolean
-from sqlalchemy.dialects.postgresql import HSTORE
+    Double, BigInteger, DateTime, Boolean
+from sqlalchemy.dialects.postgresql import HSTORE, JSONB
+try:
+    from sqlalchemy import ARRAY
+except ImportError:
+    from sqlalchemy.dialects.postgresql import ARRAY
 
 metadata = MetaData()
 
@@ -25,7 +29,6 @@ power = id_name_column('power')()
 station_type = id_name_column('station_type')()
 module = id_name_column('module')()
 ship = id_name_column('ship')()
-commodity = id_name_column('commodity')()
 
 system = Table(
     'system', metadata,
@@ -98,6 +101,9 @@ station = Table(
     Column('outfitting_updated', DateTime),
     Column('shipyard_updated', DateTime),
     Column('landing_pad', Integer),
+    Column('export_commodities', JSONB),
+    Column('import_commodities', JSONB),
+    Column('prohibited_commodities', ARRAY(String)),
 )
 
 
@@ -136,30 +142,6 @@ station_economy_map = Table(
     Column('station_id', Integer, ForeignKey('station.id'))
 )
 
-station_export_commodities = Table(
-    'station_export_commodities', metadata,
-    pkey_column(),
-    Column('commodity_id', Integer, ForeignKey('commodity.id')),
-    Column('station_id', Integer, ForeignKey('station.id')),
-    Column('price', Integer),
-    Column('stock', Integer)
-)
-
-station_import_commodities = Table(
-    'station_import_commodities', metadata,
-    pkey_column(),
-    Column('commodity_id', Integer, ForeignKey('commodity.id')),
-    Column('station_id', Integer, ForeignKey('station.id')),
-    Column('price', Integer),
-    Column('demand', Integer)
-)
-
-station_prohibited_commodities = Table(
-    'station_prohibited_commodities', metadata,
-    pkey_column(),
-    Column('commodity_id', Integer, ForeignKey('commodity.id')),
-    Column('station_id', Integer, ForeignKey('station.id'))
-)
 
 station_module_map = Table(
     'station_module_map', metadata,

@@ -89,7 +89,7 @@ station = Table(
     Column('government', String),
     Column('station_type', String),
     Column('distance_to_star', Double),  # Do we need bigint here?
-    Column('ed_market_id', Integer),
+    Column('ed_market_id', BigInteger),
     Column('services_bm', Integer),  # Can we have a bitmask instead of 14 boolean fields?
     Column('is_planetary', Boolean),
     Column('last_updated', DateTime),

@@ -85,6 +85,7 @@ station = Table(
     name_column(),
     Column('allegiance_id', Integer, ForeignKey('allegiance.id')),
     Column('body_id', Integer, ForeignKey('body.id')),
+    Column('system_id', Integer, ForeignKey('system.id')),
     Column('faction_id', Integer, ForeignKey('faction.id')),
     Column('government_id', Integer, ForeignKey('government.id')),
     Column('station_type_id', Integer, ForeignKey('station_type.id')),

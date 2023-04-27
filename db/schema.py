@@ -20,13 +20,10 @@ def id_name_column(name):
 
 power_state = id_name_column('power_state')()
 economy = id_name_column('economy')()
-government = id_name_column('government')()
 reserve_type = id_name_column('reserve_type')()
 faction = id_name_column('faction')()
-allegiance = id_name_column('allegiance')()
 security = id_name_column('security')()
 power = id_name_column('power')()
-station_type = id_name_column('station_type')()
 module = id_name_column('module')()
 ship = id_name_column('ship')()
 
@@ -34,14 +31,14 @@ system = Table(
     'system', metadata,
     pkey_column(),
     name_column(),
-    Column('allegiance_id', Integer, ForeignKey('allegiance.id')),
     Column('controlling_minor_faction_id', Integer, ForeignKey('faction.id')),
-    Column('government_id', Integer, ForeignKey('government.id')),
     Column('power_id', Integer, ForeignKey('power.id')),
     Column('power_state_id', Integer, ForeignKey('power_state.id')),
     Column('primary_economy_id', Integer, ForeignKey('economy.id')),
     Column('reserve_type_id', Integer, ForeignKey('reserve_type.id')),
     Column('security_id', Integer, ForeignKey('security.id')),
+    Column('allegiance', String),
+    Column('government', String),
     Column('x', Double),
     Column('y', Double),
     Column('z', Double),
@@ -60,7 +57,7 @@ body = Table(
     Column('atmosphere_composition', HSTORE),  # Will we ever need this as data?
     Column('atmosphere_type', String),
     Column('axial_tilt', Double),
-    Column('distance_to_arrival', BigInteger),
+    Column('distance_to_arrival', Double),
     Column('earth_masses', Double),
     Column('ed_body_address', BigInteger),  # Is this int64 id?
     Column('gravity', Double),
@@ -86,14 +83,14 @@ station = Table(
     'station', metadata,
     pkey_column(),
     name_column(),
-    Column('allegiance_id', Integer, ForeignKey('allegiance.id')),
     Column('body_id', Integer, ForeignKey('body.id')),
     Column('system_id', Integer, ForeignKey('system.id')),
     Column('faction_id', Integer, ForeignKey('faction.id')),
-    Column('government_id', Integer, ForeignKey('government.id')),
-    Column('station_type_id', Integer, ForeignKey('station_type.id')),
-    Column('distance_to_star', BigInteger),  # Do we need bigint here?
-    Column('ed_market_id', Integer),  # what's this?
+    Column('allegiance', String),
+    Column('government', String),
+    Column('station_type', String),
+    Column('distance_to_star', Double),  # Do we need bigint here?
+    Column('ed_market_id', Integer),
     Column('services_bm', Integer),  # Can we have a bitmask instead of 14 boolean fields?
     Column('is_planetary', Boolean),
     Column('last_updated', DateTime),

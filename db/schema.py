@@ -26,11 +26,6 @@ station_type = id_name_column('station_type')()
 module = id_name_column('module')()
 ship = id_name_column('ship')()
 commodity = id_name_column('commodity')()
-landing_pad = Table(
-    'landing_pad', metadata,
-    pkey_column(),
-    Column('size', SmallInteger)  # We have only three...
-)
 
 system = Table(
     'system', metadata,
@@ -92,7 +87,6 @@ station = Table(
     Column('body_id', Integer, ForeignKey('body.id')),
     Column('faction_id', Integer, ForeignKey('faction.id')),
     Column('government_id', Integer, ForeignKey('government.id')),
-    Column('landing_pad_id', Integer, ForeignKey('landing_pad.id')),
     Column('station_type_id', Integer, ForeignKey('station_type.id')),
     Column('distance_to_star', BigInteger),  # Do we need bigint here?
     Column('ed_market_id', Integer),  # what's this?
@@ -102,6 +96,7 @@ station = Table(
     Column('market_updated', DateTime),
     Column('outfitting_updated', DateTime),
     Column('shipyard_updated', DateTime),
+    Column('landing_pad', Integer),
 )
 
 

@@ -49,11 +49,12 @@ class DBBase:
         self.engine = engine
 
     def execute(self, *args, **kwargs):
-        return self.engine.execute(*args, **kwargs)
+        with self.engine.connect() as conn:
+            return conn.execute(*args, **kwargs)
 
     def get(self, table, *fields, **kwargs):
         order_by = kwargs.pop('order_by', None)
-        result = table.select(whereclause=kwargs_to_query(table, **kwargs))
+        result = table.select().where(kwargs_to_query(table, **kwargs))
         if fields:
             result = result.with_only_columns(map(text, fields))
         if order_by:

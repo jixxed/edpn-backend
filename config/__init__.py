@@ -16,7 +16,15 @@ class General:
 
 
 @dataclass(frozen=True)
+class Web:
+    enabled: bool = True
+    host: str = '0.0.0.0'
+    port: int = 8080
+
+
+@dataclass(frozen=True)
 class EDDN:
+    enabled: bool = True
     json_file: Optional[str] = None
 
 
@@ -32,6 +40,7 @@ class DB:
 @dataclass(frozen=True)
 class Config:
     db: DB = field(default_factory=DB)
+    web: Web = field(default_factory=Web)
     general: General = field(default_factory=General)
     eddn: EDDN = field(default_factory=EDDN)
 

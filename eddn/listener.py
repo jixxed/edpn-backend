@@ -38,7 +38,7 @@ MESSAGE_PROCESSORS = {
 ctx = zmq.asyncio.Context().instance()
 
 
-async def process_eddn():
+async def _process_eddn():
     sock = ctx.socket(zmq.SUB)
     sock.setsockopt(zmq.SUBSCRIBE, b'')  # TODO Can we subscribe for specific schema only?
     sock.setsockopt(zmq.RCVTIMEO, EDDNTimeout)
@@ -55,6 +55,13 @@ async def process_eddn():
                 f.write(json.dumps(msg_json, indent=4) + '\n')
         message_processor = MESSAGE_PROCESSORS.get(schema, default)
         message_processor.process(schema, msg_json['message'])
+
+
+async def process_eddn():
+    try:
+        await _process_eddn()
+    except asyncio.CancelledError:
+        raise  # The exception should be reraised after cleanup if any
 
 
 if __name__ == '__main__':

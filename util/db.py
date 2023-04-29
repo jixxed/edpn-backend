@@ -80,5 +80,5 @@ class DBBase:
 
 def kwargs_to_query(table, **kwargs):
     ensure_op = lambda x: x if isinstance(x, ColumnOperation) else eq(x)
-    return and_(ensure_op(value).apply(getattr(table.c, name))
-                for name, value in kwargs.items())
+    return and_(*[ensure_op(value).apply(getattr(table.c, name))
+                for name, value in kwargs.items()])

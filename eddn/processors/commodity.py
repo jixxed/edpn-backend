@@ -54,13 +54,13 @@ def process(schema, message):
             # https://discord.com/channels/164411426939600896/164413405472620546/367031328899727361
             import_commodities[commodity_name] = {
                 'demand': commodity['demand'],
-                'price': commodity['buyPrice'],
+                'price': commodity['sellPrice'],
             }
 
         if commodity['stockBracket'] != 0:
             export_commodities[commodity_name] = {
                 'stock': commodity['stock'],
-                'price': commodity['sellPrice'],
+                'price': commodity['buyPrice'],
             }
 
     # Process economies

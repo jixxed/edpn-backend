@@ -57,20 +57,21 @@ def single_route_finder(reference_station: int,
         profit = best_sell[0] - best_buy[0]
 
         # We're interested in positive profit only
-        # if profit <= 0:
-        #     continue
+        if profit <= 0:
+            continue
         profits[commodity] = {
             'buy': stations_by_id[best_buy[1]],
             'buy_id': best_buy[1],
             'sell': stations_by_id[best_sell[1]],
             'sell_id': best_sell[1],
-            'profit': best_sell[0] - best_buy[0]
+            'profit': profit,
         }
 
     return profits
 
 
-def route_finder(route_type: str, reference_station: int, radius: float) -> dict:
+def route_finder(route_type: str, reference_station: int,
+                 radius: float) -> dict:
     routes = {
         'single': single_route_finder,
     }

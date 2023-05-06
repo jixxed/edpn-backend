@@ -24,8 +24,8 @@ public class SynchronizedReceiveJournalMessageService implements ReceiveJournalM
 
     @Override
     @Transactional
-    public synchronized void receive(JournalMessage.V1 commodityMessage) {
+    public synchronized void receive(JournalMessage.V1 journalMessage) {
         long start = System.nanoTime();
-        LOGGER.debug("ReceiveCommodityMessageService.receive -> commodityMessage: " + commodityMessage);
+        LOGGER.debug("ReceiveJournalMessageService.receive -> journalMessage: " + journalMessage);
     }
 }

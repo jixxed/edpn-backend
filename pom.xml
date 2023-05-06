@@ -9,6 +9,7 @@
         <module>eddn-message-listener</module>
         <module>edpn-message-processors/edpn-messageprocessor-lib</module>
         <module>edpn-message-processors/edpn-commodityv3-message-processor</module>
+        <module>edpn-message-processors/edpn-journalv1-message-processor</module>
         <module>edpn-rest</module>
     </modules>
 </project>

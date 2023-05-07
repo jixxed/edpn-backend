@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-public interface CommodityMessage {
+public interface ApproachsettlementMessage {
     @Data
     @NoArgsConstructor
-    class V3 implements withMessageTimestamp {
+    class V1 implements withMessageTimestamp {
         @JsonProperty("$schemaRef")
         private String schemaRef;
         @JsonProperty("header")
@@ -44,12 +44,12 @@ public interface CommodityMessage {
             @JsonProperty("prohibited")
             private String[] prohibited;
             @JsonProperty("commodities")
-            private Commodity[] commodities;
+            private Approachsettlement[] approachsettlements;
         }
 
         @Data
         @NoArgsConstructor
-        public static class Commodity {
+        public static class Approachsettlement {
             @JsonProperty("name")
             private String name;
             @JsonProperty("meanPrice")

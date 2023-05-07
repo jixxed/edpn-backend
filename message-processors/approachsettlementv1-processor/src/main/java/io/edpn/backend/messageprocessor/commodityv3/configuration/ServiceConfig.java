@@ -1,7 +1,7 @@
 package io.edpn.backend.messageprocessor.commodityv3.configuration;
 
-import io.edpn.backend.messageprocessor.commodityv3.application.service.SynchronizedReceiveCommodityMessageService;
-import io.edpn.backend.messageprocessor.commodityv3.application.usecase.ReceiveCommodityMessageUseCase;
+import io.edpn.backend.messageprocessor.commodityv3.application.service.SynchronizedReceiveApproachsettlementMessageService;
+import io.edpn.backend.messageprocessor.commodityv3.application.usecase.ReceiveApproachsettlementMessageUseCase;
 import io.edpn.backend.messageprocessor.commodityv3.domain.repository.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,14 +10,9 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfig {
 
     @Bean
-    public ReceiveCommodityMessageUseCase receiveCommodityMessageUsecase(
-            SystemRepository systemRepository,
-            StationRepository stationRepository,
-            CommodityRepository commodityRepository,
-            EconomyRepository economyRepository,
-            HistoricStationCommodityMarketDatumRepository historicStationCommodityMarketDatumRepository,
-            SchemaLatestTimestampRepository schemaLatestTimestampRepository,
-            StationSystemRepository stationSystemRepository) {
-        return new SynchronizedReceiveCommodityMessageService(systemRepository, stationRepository, commodityRepository, economyRepository, historicStationCommodityMarketDatumRepository, schemaLatestTimestampRepository, stationSystemRepository);
+    public ReceiveApproachsettlementMessageUseCase receiveApproachsettlementMessageUsecase(
+            ApproachsettlementRepository approachsettlementRepository,
+            SchemaLatestTimestampRepository schemaLatestTimestampRepository) {
+        return new SynchronizedReceiveApproachsettlementMessageService(approachsettlementRepository, schemaLatestTimestampRepository);
     }
 }

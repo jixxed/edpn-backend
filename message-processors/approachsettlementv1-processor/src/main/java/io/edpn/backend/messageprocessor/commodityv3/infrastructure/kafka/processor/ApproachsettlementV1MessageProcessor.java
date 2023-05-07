@@ -3,23 +3,23 @@ package io.edpn.backend.messageprocessor.commodityv3.infrastructure.kafka.proces
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.edpn.backend.messageprocessor.commodityv3.application.usecase.ReceiveCommodityMessageUseCase;
+import io.edpn.backend.messageprocessor.commodityv3.application.usecase.ReceiveApproachsettlementMessageUseCase;
 import io.edpn.backend.messageprocessor.infrastructure.kafka.processor.EddnMessageProcessor;
-import io.edpn.backend.messageprocessor.commodityv3.application.dto.eddn.CommodityMessage;
+import io.edpn.backend.messageprocessor.commodityv3.application.dto.eddn.ApproachsettlementMessage;
 
 import java.util.concurrent.Semaphore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 
 @RequiredArgsConstructor
-public class CommodityV3MessageProcessor implements EddnMessageProcessor<CommodityMessage.V3> {
+public class ApproachsettlementV1MessageProcessor implements EddnMessageProcessor<ApproachsettlementMessage.V1> {
 
-    private final ReceiveCommodityMessageUseCase receiveCommodityMessageUsecase;
+    private final ReceiveApproachsettlementMessageUseCase receiveApproachsettlementMessageUsecase;
     private final ObjectMapper objectMapper;
     private final Semaphore semaphore = new Semaphore(1); // Change the number of permits if needed
 
     @Override
-    @KafkaListener(topics = "https___eddn.edcd.io_schemas_commodity_3", groupId = "commodity", containerFactory = "eddnCommodityKafkaListenerContainerFactory")
+    @KafkaListener(topics = "https___eddn.edcd.io_schemas_approachsettlement_1", groupId = "approachsettlement", containerFactory = "eddnApproachsettlementKafkaListenerContainerFactory")
     public void listen(JsonNode json) throws JsonProcessingException, InterruptedException {
         semaphore.acquire(); // Acquire a permit before processing the message
         try {
@@ -30,12 +30,12 @@ public class CommodityV3MessageProcessor implements EddnMessageProcessor<Commodi
     }
 
     @Override
-    public void handle(CommodityMessage.V3 message) {
-        receiveCommodityMessageUsecase.receive(message);
+    public void handle(ApproachsettlementMessage.V1 message) {
+        receiveApproachsettlementMessageUsecase.receive(message);
     }
 
     @Override
-    public CommodityMessage.V3 processJson(JsonNode json) throws JsonProcessingException {
-        return objectMapper.treeToValue(json, CommodityMessage.V3.class);
+    public ApproachsettlementMessage.V1 processJson(JsonNode json) throws JsonProcessingException {
+        return objectMapper.treeToValue(json, ApproachsettlementMessage.V1.class);
     }
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommodityEntity {
+public class ApproachsettlementEntity {
 
     private UUID id;
     private String name;

@@ -40,8 +40,8 @@ public interface KafkaConsumerConfig {
         }
 
         @Bean
-        public ConcurrentKafkaListenerContainerFactory<String, JsonNode> eddnCommodityKafkaListenerContainerFactory(EddnJsonKafkaConsumerConfig kafkaConfig) {
-            return kafkaConfig.kafkaListenerContainerFactory("commodity");
+        public ConcurrentKafkaListenerContainerFactory<String, JsonNode> eddnApproachsettlementKafkaListenerContainerFactory(EddnJsonKafkaConsumerConfig kafkaConfig) {
+            return kafkaConfig.kafkaListenerContainerFactory("approachsettlement");
         }
     }
 }

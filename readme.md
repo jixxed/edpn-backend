@@ -35,7 +35,7 @@ The EDPN Backend project consists of several independent projects contained with
 - `rest`: The project that provides the REST API.
 - `message-processors`: A containing folder for the message processor projects that consume the messages from the Kafka.
 - `messageprocessor-lib`: A project inside `message-processors` that provides a shared library for the other message processors.
-- `commodityv3-processor`: A project that consumes the commodity messages from the Kafka, processes the data, and stores it in the database.
+- `commodityv3-processor`: A project that consumes the approachsettlement messages from the Kafka, processes the data, and stores it in the database.
 
 ### Code structure
 The projects follow a hexagonal architecture pattern and adheres to Domain-Driven Design (DDD) principles.

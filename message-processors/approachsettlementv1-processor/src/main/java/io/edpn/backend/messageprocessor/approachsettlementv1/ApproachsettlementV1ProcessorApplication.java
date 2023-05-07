@@ -6,10 +6,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties
-public class CommodityV3ProcessorApplication {
+public class ApproachsettlementV1ProcessorApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CommodityV3ProcessorApplication.class, args);
+        SpringApplication.run(ApproachsettlementV1ProcessorApplication.class, args);
     }
 
 }

@@ -5,8 +5,6 @@ import io.edpn.backend.messageprocessor.approachsettlementv1.application.usecase
 import io.edpn.backend.messageprocessor.approachsettlementv1.domain.repository.ApproachsettlementRepository;
 import io.edpn.backend.messageprocessor.approachsettlementv1.domain.repository.SchemaLatestTimestampRepository;
 import io.edpn.backend.messageprocessor.approachsettlementv1.application.dto.eddn.ApproachsettlementMessage;
-import io.edpn.backend.messageprocessor.commodityv3.application.dto.persistence.*;
-import io.edpn.backend.messageprocessor.commodityv3.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +39,9 @@ public class SynchronizedReceiveApproachsettlementMessageService implements Rece
         }
         LOGGER.info("ReceiveApproachsettlementMessageService.receive -> the message is newer than what we already processed, starting processing");
 
-//        LOGGER.debug("ReceiveCommodityMessageService.receive -> station: " + station);
-//        LOGGER.info("ReceiveCommodityMessageService.receive -> the message is has been processed");
-//        LOGGER.trace("ReceiveCommodityMessageService.receive -> took " + (System.nanoTime() - start) + " nanosecond");
+//        LOGGER.debug("ReceiveApproachsettlementMessageService.receive -> station: " + station);
+//        LOGGER.info("ReceiveApproachsettlementMessageService.receive -> the message is has been processed");
+//        LOGGER.trace("ReceiveApproachsettlementMessageService.receive -> took " + (System.nanoTime() - start) + " nanosecond");
     }
 
     private boolean isLatestMessageAndUpdateTimestamp(LocalDateTime updateTimestamp, String schemaRef) {

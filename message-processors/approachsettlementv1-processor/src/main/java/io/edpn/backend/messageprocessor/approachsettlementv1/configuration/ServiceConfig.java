@@ -4,7 +4,6 @@ import io.edpn.backend.messageprocessor.approachsettlementv1.application.service
 import io.edpn.backend.messageprocessor.approachsettlementv1.application.usecase.ReceiveApproachsettlementMessageUseCase;
 import io.edpn.backend.messageprocessor.approachsettlementv1.domain.repository.ApproachsettlementRepository;
 import io.edpn.backend.messageprocessor.approachsettlementv1.domain.repository.SchemaLatestTimestampRepository;
-import io.edpn.backend.messageprocessor.commodityv3.domain.repository.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

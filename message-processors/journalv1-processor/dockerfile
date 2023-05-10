@@ -5,7 +5,7 @@ FROM openjdk:17-alpine3.14 as builder
 WORKDIR /app
 
 # Copy Maven wrapper and pom.xml to the working directory
-COPY ./mvnw ./
+COPY mvnw ./
 COPY .mvn .mvn
 COPY pom.xml ./
 

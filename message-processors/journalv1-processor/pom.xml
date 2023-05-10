@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.edpn.backend.messageprocessor</groupId>
-    <artifactId>edpn-journalv1-message-processor</artifactId>
+    <artifactId>journalv1-processor</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>edpn-journalv1-message-processor</name>
-    <description>edpn-backend</description>
+    <name>edpn-journalv1-processor</name>
+    <description>Commodity message processor</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
@@ -29,7 +29,7 @@
     <dependencies>
         <dependency>
             <groupId>io.edpn.backend.messageprocessor</groupId>
-            <artifactId>edpn-messageprocessor-lib</artifactId>
+            <artifactId>messageprocessor-lib</artifactId>
             <version>${messageprocessor.lib.version}</version>
         </dependency>
         <dependency>
@@ -133,7 +133,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>io.edpn.edpnbackend.edpnBackendApplication</mainClass>
+                    <mainClass>io.edpn.backend.messageprocessor.journalv1.journalv1ProcessorApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

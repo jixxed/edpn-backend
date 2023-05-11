@@ -27,56 +27,32 @@ public interface ApproachsettlementMessage {
         @Data
         @NoArgsConstructor
         public static class Message {
-            @JsonProperty("systemName")
-            private String systemName;
-            @JsonProperty("stationName")
-            private String stationName;
-            @JsonProperty("marketId")
-            private long marketId;
+            @JsonProperty("timestamp")
+            private String timestamp;
+            @JsonProperty("event")
+            private String event;
             @JsonProperty("horizons")
             private boolean horizons;
             @JsonProperty("odyssey")
             private boolean odyssey;
-            @JsonProperty("timestamp")
-            private String timestamp;
-            @JsonProperty("economies")
-            private Economy[] economies;
-            @JsonProperty("prohibited")
-            private String[] prohibited;
-            @JsonProperty("commodities")
-            private Approachsettlement[] approachsettlements;
-        }
-
-        @Data
-        @NoArgsConstructor
-        public static class Approachsettlement {
-            @JsonProperty("name")
+            @JsonProperty("StarSystem")
+            private String starSystem;
+            @JsonProperty("StarPos")
+            private double[] starPos;
+            @JsonProperty("SystemAddress")
+            private long systemAddress;
+            @JsonProperty("Name")
             private String name;
-            @JsonProperty("meanPrice")
-            private int meanPrice;
-            @JsonProperty("buyPrice")
-            private int buyPrice;
-            @JsonProperty("stock")
-            private int stock;
-            @JsonProperty("stockBracket")
-            private int stockBracket;
-            @JsonProperty("sellPrice")
-            private int sellPrice;
-            @JsonProperty("demand")
-            private int demand;
-            @JsonProperty("demandBracket")
-            private int demandBracket;
-            @JsonProperty("statusFlags")
-            private String[] statusFlags;
-        }
-
-        @Data
-        @NoArgsConstructor
-        public static class Economy {
-            @JsonProperty("name")
-            private String name;
-            @JsonProperty("proportion")
-            private double proportion;
+            @JsonProperty("MarketID")
+            private long marketID;
+            @JsonProperty("BodyID")
+            private long bodyID;
+            @JsonProperty("BodyName")
+            private String bodyName;
+            @JsonProperty("Latitude")
+            private double latitude;
+            @JsonProperty("Longitude")
+            private double longitude;
         }
     }
 }

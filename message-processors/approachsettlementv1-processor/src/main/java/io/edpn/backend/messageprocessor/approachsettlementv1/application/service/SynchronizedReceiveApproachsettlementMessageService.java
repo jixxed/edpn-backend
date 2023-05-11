@@ -1,9 +1,7 @@
 package io.edpn.backend.messageprocessor.approachsettlementv1.application.service;
 
-import io.edpn.backend.messageprocessor.approachsettlementv1.application.dto.persistence.SchemaLatestTimestampEntity;
 import io.edpn.backend.messageprocessor.approachsettlementv1.application.usecase.ReceiveApproachsettlementMessageUseCase;
 import io.edpn.backend.messageprocessor.approachsettlementv1.domain.repository.ApproachsettlementRepository;
-import io.edpn.backend.messageprocessor.approachsettlementv1.domain.repository.SchemaLatestTimestampRepository;
 import io.edpn.backend.messageprocessor.approachsettlementv1.application.dto.eddn.ApproachsettlementMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -17,7 +15,6 @@ public class SynchronizedReceiveApproachsettlementMessageService implements Rece
     private static final Logger LOGGER = LoggerFactory.getLogger(SynchronizedReceiveApproachsettlementMessageService.class);
 
     private final ApproachsettlementRepository approachsettlementRepository;
-    private final SchemaLatestTimestampRepository schemaLatestTimestampRepository;
 
     @Override
     @Transactional

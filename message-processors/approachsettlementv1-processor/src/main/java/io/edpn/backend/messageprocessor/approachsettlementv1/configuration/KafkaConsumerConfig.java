@@ -1,8 +1,6 @@
 package io.edpn.backend.messageprocessor.approachsettlementv1.configuration;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +11,9 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public interface KafkaConsumerConfig {
     @EnableKafka

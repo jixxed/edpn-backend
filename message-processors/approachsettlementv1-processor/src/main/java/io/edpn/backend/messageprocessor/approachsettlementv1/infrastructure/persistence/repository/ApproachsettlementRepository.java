@@ -1,7 +1,7 @@
 package io.edpn.backend.messageprocessor.approachsettlementv1.infrastructure.persistence.repository;
 
-import io.edpn.backend.messageprocessor.approachsettlementv1.infrastructure.persistence.mappers.ApproachsettlementEntityMapper;
 import io.edpn.backend.messageprocessor.approachsettlementv1.application.dto.persistence.ApproachsettlementEntity;
+import io.edpn.backend.messageprocessor.approachsettlementv1.infrastructure.persistence.mappers.ApproachsettlementEntityMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;

@@ -15,7 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan("io.edpn.edpnbackend.infrastructure.persistence.mappers")
+@MapperScan("io.edpn.backend.messageprocessor.approachsettlementv1.infrastructure.persistence.mapper")
 public class MyBatisConfiguration {
 
     @Bean

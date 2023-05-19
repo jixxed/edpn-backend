@@ -36,9 +36,9 @@ public class SynchronizedReceiveApproachsettlementMessageService implements Rece
         }
         LOGGER.info("ReceiveApproachsettlementMessageService.receive -> the message is newer than what we already processed, starting processing");
 
-//        LOGGER.debug("ReceiveApproachsettlementMessageService.receive -> station: " + station);
-//        LOGGER.info("ReceiveApproachsettlementMessageService.receive -> the message is has been processed");
-//        LOGGER.trace("ReceiveApproachsettlementMessageService.receive -> took " + (System.nanoTime() - start) + " nanosecond");
+        LOGGER.debug("ReceiveApproachsettlementMessageService.receive -> station: " + station);
+        LOGGER.info("ReceiveApproachsettlementMessageService.receive -> the message is has been processed");
+        LOGGER.trace("ReceiveApproachsettlementMessageService.receive -> took " + (System.nanoTime() - start) + " nanosecond");
     }
 
     private boolean isLatestMessageAndUpdateTimestamp(LocalDateTime updateTimestamp, String schemaRef) {
